@@ -1,0 +1,21 @@
+#!/bin/bash
+list() {
+  VBoxManage list vms | awk '{ print NR " ~> " $0 }'
+}
+
+start() {
+  awk_script="'BEGIN{FS=\" \"}{ if(NR==$1) print \$3 }'"
+  vm_id=$(VBoxManage list vms | eval "awk $awk_script")
+  VBoxHeadless --startvm $vm_id
+}
+
+help() {
+  echo "use: $0 <command>"
+  echo
+  echo "commands:"
+  echo "  list  - List VMs available on VirtualBox"
+  echo "  start - Start a VM by Number (listed on \"list\" command)"
+  echo 
+}
+
+eval "$1 $2"
