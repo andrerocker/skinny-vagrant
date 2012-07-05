@@ -6,7 +6,7 @@ list() {
 start() {
   awk_script="'BEGIN{FS=\" \"}{ if(NR==$1) print \$3 }'"
   vm_id=$(VBoxManage list vms | eval "awk $awk_script")
-  VBoxHeadless --startvm $vm_id
+  VBoxHeadless --startvm $vm_id &
 }
 
 help() {
